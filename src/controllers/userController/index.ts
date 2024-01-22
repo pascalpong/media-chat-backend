@@ -1,19 +1,29 @@
 import { Request, Response } from 'express';
-import mongoose from 'mongoose';
 
 // Game model
 var Users = require('../../config/models/userModel');
 
-export const users = async (req: Request, res: Response) => {
-    return res.json('adsfasdf')
+export const getUsers = async (req: Request, res: Response) => {
+
+    const users = await Users.find();
+
+    return res.json(users)
 }
 
 export const createUser = async (req: Request, res: Response) => {
-    const newGame = {
-        name:'test',
-        token: '2334asfasd1234'
-    };
-    const response = await Users(newGame).save()
+    try {
 
-    return res.json(response);
+        const { name, token, username, socialMedia } = req.body;
+        const createUser = {
+            username,
+            name,
+            socialMedia,
+            token
+        };
+        const response = await Users(createUser).save()
+        return res.json(response);
+
+    } catch (error) {
+        
+    }
 }

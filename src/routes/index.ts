@@ -1,10 +1,10 @@
 import express from "express";
-import path from "path";
-import { createUser, users } from "../controllers/userController";
-// import { asyncHandler } from "../utils/helpers/asyncHandler.ts";
+import userRouter from "./user";
+import chatRoomRouter from "./chatRoom";
+
 const router = express.Router();
 
-router.get("/", users);
-router.post("/user", createUser)
+router.use('/user', userRouter);
+router.use('/chat-room', chatRoomRouter);
 
 export default router;

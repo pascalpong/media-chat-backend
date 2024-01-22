@@ -1,8 +1,11 @@
 import express, { NextFunction, Request, Response } from "express";
 import cors from "cors";
+import dotenv from 'dotenv';
 import { createServer } from "http";  // Changed from "node:http"
 import router from "./routes/index";
 import connectDB from "./config/database";  // Import the connectDB function
+
+dotenv.config();
 
 const app = express();
 const server = createServer(app);

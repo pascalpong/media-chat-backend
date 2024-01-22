@@ -3,7 +3,9 @@ const { Schema } = mongoose;
 
 const userSchema = new Schema({
   name: String,
-  token: String
+  token: String,
+  username: String,
+  socialMedia: Array,
 },{
     timestamps: true
 });
