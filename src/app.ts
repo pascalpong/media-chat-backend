@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import { createServer } from "http";  // Changed from "node:http"
 import router from "./routes/index";
 import connectDB from "./config/database";  // Import the connectDB function
+import { Server, Socket } from "socket.io";
 
 dotenv.config();
 
@@ -14,6 +15,22 @@ const server = createServer(app);
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+//socket io
+const httpServer = require("http").createServer(app);
+const options = {   
+  cors: {
+    origin: [
+      'http://localhost:3000',
+    ],
+    methods: ['GET', 'POST'],
+    credentials: true
+  } 
+};
+const io = require("socket.io")(httpServer, options);
+io.on("connection", (socket: Socket) => {
+  io.emit('message', 'A new client has connected');
+});
 
 // Connect to the database
 connectDB();
