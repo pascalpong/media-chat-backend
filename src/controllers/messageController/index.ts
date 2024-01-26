@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 
+import { io } from '../../app';
 // Game model
 var ChatRoom = require('../../config/models/chatRoomModel');
 var Message = require('../../config/models/messageModel')
@@ -14,6 +15,9 @@ export const createMessage = async (req: Request, res: Response) => {
             roomId,
             sentAt: new Date
         };
+        io.emit(`${userId}-played`, {
+            createRoom
+        });
         const response = await Message(createRoom).save()
         return res.json(response);
     } catch (error) {

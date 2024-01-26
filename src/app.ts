@@ -16,21 +16,6 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-//socket io
-const httpServer = require("http").createServer(app);
-const options = {   
-  cors: {
-    origin: [
-      'http://localhost:3000',
-    ],
-    methods: ['GET', 'POST'],
-    credentials: true
-  } 
-};
-const io = require("socket.io")(httpServer, options);
-io.on("connection", (socket: Socket) => {
-  io.emit('message', 'A new client has connected');
-});
 
 // Connect to the database
 connectDB();
@@ -42,6 +27,20 @@ app.use("", router);
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   console.error(err.stack);
   res.status(500).send("Something went wrong!");
-}); 
+});
+
+//socket io
+export const io = new Server(server, {
+  cors: {
+    origin: [
+      'http://localhost:3000'
+    ],
+    methods: ['GET', 'POST'],
+    credentials: true
+  }
+});
+io.on("connection", (socket: Socket) => {
+  io.emit('message', 'A new client has connected');
+});
 
 export default app
