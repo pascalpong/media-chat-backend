@@ -23,12 +23,6 @@ connectDB();
 // router
 app.use("", router);
 
-// Error handling middleware
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  console.error(err.stack);
-  res.status(500).send("Something went wrong!");
-});
-
 //socket io
 export const io = new Server(server, {
   cors: {
@@ -40,7 +34,15 @@ export const io = new Server(server, {
   }
 });
 io.on("connection", (socket: Socket) => {
-  io.emit('message', 'A new client has connected');
+  socket.emit('message', 'A new client has connected');
 });
 
-export default app
+// Error handling middleware
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  console.error(err.stack);
+  res.status(500).send("Something went wrong!");
+});
+
+
+
+export default server
