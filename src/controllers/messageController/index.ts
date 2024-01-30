@@ -15,8 +15,8 @@ export const createMessage = async (req: Request, res: Response) => {
             roomId,
             sentAt: new Date
         };
-        await io.emit(`65b20bdeca1e0619453d9ab0-played`, {
-            createRoom
+        await io.emit(`${userId}`, {
+            data: createRoom
         });
         const response = await Message(createRoom).save()
         return res.json(response);
