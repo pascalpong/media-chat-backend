@@ -33,8 +33,18 @@ export const io = new Server(server, {
     credentials: true
   }
 });
+
 io.on("connection", (socket: Socket) => {
-  socket.emit('message', 'A new client has connected');
+  console.log('Socket.io Connected')
+
+  socket.on('join', (data) => {
+    socket.join(data)
+  });
+  socket.on('message', (data) => {
+    io.to(data.roomId).emit('get-message', data.message)
+  });
+  socket.emit('message', 'A nconnectionew client has connected');
+  
 });
 
 // Error handling middleware

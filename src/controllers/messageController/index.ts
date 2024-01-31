@@ -15,9 +15,6 @@ export const createMessage = async (req: Request, res: Response) => {
             roomId,
             sentAt: new Date
         };
-        await io.emit(`${userId}`, {
-            data: createRoom
-        });
         const response = await Message(createRoom).save()
         return res.json(response);
     } catch (error) {
