@@ -41,7 +41,7 @@ io.on("connection", (socket: Socket) => {
     socket.join(data)
   });
   socket.on('message', (data) => {
-    io.to(data.roomId).emit('get-message', data.message)
+    io.to(data.roomId).emit('get-message', data)
   });
   socket.emit('message', 'A nconnectionew client has connected');
   
