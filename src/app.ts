@@ -35,16 +35,13 @@ export const io = new Server(server, {
 });
 
 io.on("connection", (socket: Socket) => {
-  console.log('Socket.io Connected')
-
   socket.on('join', (data) => {
     socket.join(data)
   });
   socket.on('message', (data) => {
     io.to(data.roomId).emit('get-message', data)
   });
-  socket.emit('message', 'A nconnectionew client has connected');
-  
+  socket.emit('message', 'A new client has connected');
 });
 
 // Error handling middleware
