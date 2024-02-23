@@ -37,5 +37,5 @@ export const chatRoomMessages = async (req: Request, res: Response) => {
         return res.json(messages);
     } catch (error) {
         console.log(error);
-    }
+    }  
 };
